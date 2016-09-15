@@ -12,7 +12,7 @@
     extension UIApplication {
         static var topViewController: UIViewController? {
 			#if !OAUTH_APP_EXTENSIONS
-				return UIApplication.shared().topViewController
+				return UIApplication.shared.topViewController
 			#else
 				return nil
 			#endif

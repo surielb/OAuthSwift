@@ -66,7 +66,7 @@ public class OAuthSwiftClient: NSObject {
             let errorInfo = [NSLocalizedDescriptionKey: NSLocalizedString("The provided token is expired.", comment:"Token expired, retrieve new token by using the refresh token")]
             
             if let failureHandler = failure {
-                failureHandler(error: NSError(domain: OAuthSwiftErrorDomain, code: OAuthSwiftErrorCode.tokenExpiredError.rawValue, userInfo: errorInfo))
+                failureHandler(NSError(domain: OAuthSwiftErrorDomain, code: OAuthSwiftErrorCode.tokenExpiredError.rawValue, userInfo: errorInfo))
             }
             
             return nil
@@ -138,7 +138,7 @@ public class OAuthSwiftClient: NSObject {
         if let queryItems = urlComponents?.queryItems {
             for queryItem in queryItems {
                 let value = queryItem.value?.safeStringByRemovingPercentEncoding ?? ""
-                queryStringParameters.updateValue(value, forKey: queryItem.name)
+                queryStringParameters.updateValue(value as AnyObject, forKey: queryItem.name)
             }
         }
 
@@ -175,7 +175,7 @@ public class OAuthSwiftClient: NSObject {
         if let request = makeRequest(url, method: method, parameters: parameters) {
             
             var paramImage = [String: AnyObject]()
-            paramImage["media"] = image
+            paramImage["media"] = image as AnyObject?
             let boundary = "AS-boundary-\(arc4random())-\(arc4random())"
             let type = "multipart/form-data; boundary=\(boundary)"
             let body = self.multiPartBodyFromParams(paramImage, boundary: boundary)
@@ -202,7 +202,7 @@ public class OAuthSwiftClient: NSObject {
             var sectionData: Data
             var sectionType: String?
             var sectionFilename: String?
-            if  let multiData = value as? Data where key == "media" {
+            if  let multiData = value as? Data , key == "media" {
                 sectionData = multiData
                 sectionType = "image/jpeg"
                 sectionFilename = "file"

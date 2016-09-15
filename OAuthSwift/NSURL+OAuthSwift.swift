@@ -29,7 +29,7 @@ extension URL {
     
     var unsafeAbsoluteString: String {
         #if swift(>=2.3)
-            return self.absoluteString!
+            return self.absoluteString
         #else
             return self.absoluteString
         #endif

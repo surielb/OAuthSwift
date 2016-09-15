@@ -23,7 +23,7 @@ extension String {
     }
 
     func urlEncodedStringWithEncoding(_ encoding: String.Encoding) -> String {
-        let originalString: NSString = self
+        let originalString: NSString = self as NSString
         let customAllowedSet =  CharacterSet(charactersIn:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
         let escapedString = originalString.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
         return escapedString! as String
